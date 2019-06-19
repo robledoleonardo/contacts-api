@@ -32,7 +32,7 @@ services:
 
   # node 10
   node:
-    build: ./node/
+    build: ./
     container_name: contacts-api-node
     restart: always
     ports:
