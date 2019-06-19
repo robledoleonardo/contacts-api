@@ -10,8 +10,6 @@ services:
     restart: always
     ports:
       - "3333:3333"
-    links:
-      - mysql
     logging:
       driver: "json-file"
       options:
