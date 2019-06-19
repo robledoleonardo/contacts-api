@@ -1,34 +1,7 @@
 # v2 sintax
 version: '2'
 
-# Named volumes
-volumes:
-  # MySQL Data
-  contacts-api-mysql-data:
-    driver: local
-  # Redis Data
-  contacts-api-redis-data:
-    driver: local
-
 services:
-  # MySQL (5.7)
-  mysql:
-    image: mysql:5.7
-    container_name: contacts-api-mysql
-    volumes:
-      - contacts-api-mysql-data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=contactsapi
-      - MYSQL_DATABASE=contactsapi
-      - MYSQL_USER=contactsapi
-      - MYSQL_PASSWORD=contactsapi
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
 
   # node 10
   node:
