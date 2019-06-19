@@ -22,7 +22,7 @@ Route.get("/", () => {
 
 // Contatos
 
-Route.get("contatos", "ContatoController.index");
+Route.get("contatos/:id?", "ContatoController.index");
 
 Route.post("contatos", "ContatoController.store").middleware(["checaEmail"]);
 

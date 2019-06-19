@@ -18,10 +18,20 @@ class ContatoController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {
-    const contatos = await Contato.all();
+  async index({ request, response, params:{ id } }) {
+    if(id){
+      const contato = await Contato.find(id);
 
-    response.status(200).json({ contatos });
+      if(!contato){
+        return response.status(404).json({ message:"Contato não encontrado" });
+      }
+
+      return response.status(200).json({ contato });
+    }
+
+    const contatos = await Contato.all();
+    return response.status(200).json({ contatos });
+    
   }
 
   /**
@@ -33,7 +43,7 @@ class ContatoController {
    * @param {Response} ctx.response
    */
   async store({ request, response }) {
-    const contatoData = request.only(["nome", "email", "telefone"]);
+    const contatoData = request.only(["nome", "email", "telefone", "cep", "endereco", "numero", "bairro", "cidade"]);
 
     const contato = await Contato.create(contatoData);
 
@@ -52,11 +62,16 @@ class ContatoController {
    * @param {Response} ctx.response
    */
   async update({ request, response }) {
-    const { nome, email, telefone, contato } = request.post();
+    const { nome, email, telefone, cep, endereco, numero, bairro, cidade, contato } = request.post();
 
     contato.nome = nome;
     contato.email = email;
     contato.telefone = telefone;
+    contato.cep = cep;
+    contato.endereco = endereco;
+    contato.numero = numero;
+    contato.bairro = bairro;
+    contato.cidade = cidade;
 
     await contato.save();
 
@@ -75,7 +90,7 @@ class ContatoController {
    * @param {Response} ctx.response
    */
   async destroy({ request, response, params: { id } }) {
-    const contato = request.post().contato;
+    const contato = await Contato.find(id);
 
     await contato.delete();
 

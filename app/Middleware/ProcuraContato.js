@@ -20,7 +20,7 @@ class ProcuraContato {
     next
   ) {
     const contato = await Contato.find(id);
-
+    console.log(contato.email)
     if (!contato) {
       return response.status(404).json({
         message: "Contato não encontrado.",
